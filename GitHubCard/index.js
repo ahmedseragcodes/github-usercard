@@ -7,7 +7,12 @@ import axios from "axios";
 */
 axios
 .get("https://api.github.com/users/AhmedSeragCodes")
+.then (function(res){
 
+})
+.catch (function(err){
+
+})
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -54,7 +59,23 @@ const followersArray = [];
       </div>
     </div>
 */
+function cardMaker({profileURL}){}
 
+//creating individual card div
+const cardDiv=document.createElement("div");
+cardDiv.classList.add("card");
+
+//creating avatar image
+const avatarImg=document.createElement("img");
+avatarImg.src="avatar_url";
+cardDiv.append(avatarImg);
+
+//creating card info div
+const cardInfoDiv=document.createElement("div");
+cardInfoDiv.classList.add("card-info");
+cardDiv.append(cardInfoDiv);
+
+console.log(cardDiv);
 /*
   List of LS Instructors Github username's:
     tetondan
