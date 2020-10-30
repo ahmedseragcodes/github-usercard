@@ -5,13 +5,16 @@ import axios from "axios";
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+let entryPoint=document.querySelector("body");
+
 axios
 .get("https://api.github.com/users/AhmedSeragCodes")
 .then (function(res){
-
+  const data= res.data;
+  entryPoint.appendChild(cardMaker(data));
 })
 .catch (function(err){
-
+  console.log(err);
 })
 
 /*
@@ -59,7 +62,7 @@ const followersArray = [];
       </div>
     </div>
 */
-function cardMaker({profileURL}){}
+function cardMaker(data){
 
 //creating individual card div
 const cardDiv=document.createElement("div");
@@ -67,7 +70,7 @@ cardDiv.classList.add("card");
 
 //creating avatar image
 const avatarImg=document.createElement("img");
-avatarImg.src="avatar_url";
+avatarImg.src=data.avatar_url;
 cardDiv.append(avatarImg);
 
 //creating card info div
@@ -75,12 +78,49 @@ const cardInfoDiv=document.createElement("div");
 cardInfoDiv.classList.add("card-info");
 cardDiv.append(cardInfoDiv);
 
-console.log(cardDiv);
-/*
-  List of LS Instructors Github username's:
-    tetondan
-    dustinmyers
-    justsml
-    luishrd
-    bigknell
-*/
+//creating h3 users name 
+const nameHeading=document.createElement("h3");
+nameHeading.textContent=data["users name"];
+nameHeading.classList.add("name");
+cardInfoDiv.append(nameHeading);
+
+//creating username
+const usernameP=document.createElement("p");
+usernameP.textContent=data["name"]
+usernameP.classList.add("username");
+cardInfoDiv.append(usernameP);
+
+//creating location p
+const locationP=document.createElement("p");
+locationP.textContent="Location: location";
+cardInfoDiv.append(locationP);
+
+//creating profile p
+const profileP=document.createElement("p");
+profileP.textContent="Profile:";
+cardInfoDiv.append(profileP);
+
+//creating profile p link
+const profPLink=document.createElement("a");
+profPLink.href="url";
+profileP.append(profPLink);
+
+//creating followers p
+const followersP=document.createElement("p");
+followersP.textContent="Followers: followers";
+cardInfoDiv.append(followersP);
+
+//creating following p
+const followingP=document.createElement("p");
+followingP.textContent="Following: following";
+cardInfoDiv.append(followingP);
+
+//creating bio p
+const bioP=document.createElement("p");
+bioP.textContent="Bio: bio";
+cardInfoDiv.append(bioP);
+
+return cardDiv;
+};
+
+console.log(cardMaker());
