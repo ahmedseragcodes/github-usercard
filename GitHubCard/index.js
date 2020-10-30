@@ -5,7 +5,9 @@ import axios from "axios";
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-let entryPoint=document.querySelector("body");
+
+const entryPoint=document.querySelector(".cards");
+
 
 axios
 .get("https://api.github.com/users/AhmedSeragCodes")
@@ -41,7 +43,22 @@ axios
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+
+const followersArray = ["juancaruizc", "Stone98", "cmirza", "Diegormnv", "AgentSamSA"];
+
+
+axios.get("https://api.github.com/users/ahmedseragcodes/followers")
+.then (function(res){
+  const dataTwo=res.data;
+  followersArray.forEach(function(login){
+    const followerCard=cardMaker(dataTwo);
+    entryPoint.append(followerCard);
+  })
+})
+.catch(function(err){
+  console.log(err);
+})
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -92,7 +109,7 @@ cardInfoDiv.append(usernameP);
 
 //creating location p
 const locationP=document.createElement("p");
-locationP.textContent="Location: location";
+locationP.textContent="Location:"+data.location;
 cardInfoDiv.append(locationP);
 
 //creating profile p
@@ -102,22 +119,23 @@ cardInfoDiv.append(profileP);
 
 //creating profile p link
 const profPLink=document.createElement("a");
-profPLink.href="url";
+profPLink.href=data.html_url;
+profPLink.textContent=data.html_url;
 profileP.append(profPLink);
 
 //creating followers p
 const followersP=document.createElement("p");
-followersP.textContent="Followers: followers";
+followersP.textContent="Followers:"+data.followers_url;
 cardInfoDiv.append(followersP);
 
 //creating following p
 const followingP=document.createElement("p");
-followingP.textContent="Following: following";
+followingP.textContent="Following:"+data.following_url;
 cardInfoDiv.append(followingP);
 
 //creating bio p
 const bioP=document.createElement("p");
-bioP.textContent="Bio: bio";
+bioP.textContent="Bio:"+data.bio;
 cardInfoDiv.append(bioP);
 
 return cardDiv;
