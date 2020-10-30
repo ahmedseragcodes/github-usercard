@@ -46,11 +46,10 @@ axios
 
 const followersArray = ["juancaruizc", "Stone98", "cmirza", "Diegormnv", "AgentSamSA"];
 
-
-axios.get("https://api.github.com/users/ahmedseragcodes/followers")
+followersArray.forEach(function(login){
+axios.get(`https://api.github.com/users/${login}`)
 .then (function(res){
-  const dataTwo=res.data;
-  followersArray.forEach(function(login){
+    const dataTwo=res.data;
     const followerCard=cardMaker(dataTwo);
     entryPoint.append(followerCard);
   })
@@ -125,12 +124,12 @@ profileP.append(profPLink);
 
 //creating followers p
 const followersP=document.createElement("p");
-followersP.textContent="Followers:"+data.followers_url;
+followersP.textContent="Followers:"+data.followers;
 cardInfoDiv.append(followersP);
 
 //creating following p
 const followingP=document.createElement("p");
-followingP.textContent="Following:"+data.following_url;
+followingP.textContent="Following:"+data.following;
 cardInfoDiv.append(followingP);
 
 //creating bio p
