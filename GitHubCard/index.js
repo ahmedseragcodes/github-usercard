@@ -1,8 +1,23 @@
+import axios from "axios";
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+
+const entryPoint=document.querySelector(".cards");
+
+
+axios
+.get("https://api.github.com/users/AhmedSeragCodes")
+.then (function(res){
+  const data= res.data;
+  entryPoint.appendChild(cardMaker(data));
+})
+.catch (function(err){
+  console.log(err);
+})
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -28,7 +43,21 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+
+const followersArray = ["juancaruizc", "Stone98", "cmirza", "Diegormnv", "AgentSamSA"];
+
+followersArray.forEach(function(login){
+axios.get(`https://api.github.com/users/${login}`)
+.then (function(res){
+    const dataTwo=res.data;
+    const followerCard=cardMaker(dataTwo);
+    entryPoint.append(followerCard);
+  })
+})
+.catch(function(err){
+  console.log(err);
+})
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -49,12 +78,66 @@ const followersArray = [];
       </div>
     </div>
 */
+function cardMaker(data){
 
-/*
-  List of LS Instructors Github username's:
-    tetondan
-    dustinmyers
-    justsml
-    luishrd
-    bigknell
-*/
+//creating individual card div
+const cardDiv=document.createElement("div");
+cardDiv.classList.add("card");
+
+//creating avatar image
+const avatarImg=document.createElement("img");
+avatarImg.src=data.avatar_url;
+cardDiv.append(avatarImg);
+
+//creating card info div
+const cardInfoDiv=document.createElement("div");
+cardInfoDiv.classList.add("card-info");
+cardDiv.append(cardInfoDiv);
+
+//creating h3 users name 
+const nameHeading=document.createElement("h3");
+nameHeading.textContent=data["users name"];
+nameHeading.classList.add("name");
+cardInfoDiv.append(nameHeading);
+
+//creating username
+const usernameP=document.createElement("p");
+usernameP.textContent=data["name"]
+usernameP.classList.add("username");
+cardInfoDiv.append(usernameP);
+
+//creating location p
+const locationP=document.createElement("p");
+locationP.textContent="Location:"+data.location;
+cardInfoDiv.append(locationP);
+
+//creating profile p
+const profileP=document.createElement("p");
+profileP.textContent="Profile:";
+cardInfoDiv.append(profileP);
+
+//creating profile p link
+const profPLink=document.createElement("a");
+profPLink.href=data.html_url;
+profPLink.textContent=data.html_url;
+profileP.append(profPLink);
+
+//creating followers p
+const followersP=document.createElement("p");
+followersP.textContent="Followers:"+data.followers;
+cardInfoDiv.append(followersP);
+
+//creating following p
+const followingP=document.createElement("p");
+followingP.textContent="Following:"+data.following;
+cardInfoDiv.append(followingP);
+
+//creating bio p
+const bioP=document.createElement("p");
+bioP.textContent="Bio:"+data.bio;
+cardInfoDiv.append(bioP);
+
+return cardDiv;
+};
+
+console.log(cardMaker());
