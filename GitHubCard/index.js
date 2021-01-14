@@ -6,11 +6,14 @@ import axios from "axios";
     https://api.github.com/users/<your name>
 */
 
+//DONE UNDER STEP 4
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
     data in order to use it to build your component function
+
+  //DONE & INSPECTED 
 
     Skip to STEP 3.
 */
@@ -40,7 +43,18 @@ const ahmedsGithub=axios.get("https://api.github.com/users/AhmedSeragCodes")
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ["juancaruizc", "Stone98", "cmirza", "Diegormnv", "AgentSamSA" ];
+
+followersArray.forEach(function(follower){
+  axios.get(`https://api.github.com/users/${follower}`)
+  .then(function(res){
+    githubCardMaker(res.data);
+  })
+  .catch(function(err){
+    console.log(err);
+  })
+})
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
