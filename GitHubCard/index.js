@@ -5,13 +5,8 @@ import axios from "axios";
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-const ahmedsGithub=axios.get("https://api.github.com/users/AhmedSeragCodes")
-.then(function(res){
-  console.log(res.data.avatar_url);
-})
-.catch(function(err){
-  console.log(err);
-})
+
+
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -24,6 +19,15 @@ const ahmedsGithub=axios.get("https://api.github.com/users/AhmedSeragCodes")
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
+
+const ahmedsGithub=axios.get("https://api.github.com/users/AhmedSeragCodes")
+.then(function(res){
+  const ahmedData=res.data;
+  githubCardMaker(ahmedData);
+})
+.catch(function(err){
+  console.log(err);
+})
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
@@ -89,7 +93,32 @@ function githubCardMaker(data){
   const usernameP=document.createElement("p");
   usernameP.textContent=data.login;
   usernameP.classList.add("username");
+  cardInfoDiv.append(usernameP);
 
+  //Location P
+  const locationP=document.createElement("p");
+  locationP.textContent=data.location;
+  cardInfoDiv.append(locationP);
+
+  //Profile URL P
+  const profileP=document.createElement("p");
+  profileP.textContent=data.url;
+  cardInfoDiv.append(profileP);
+
+  //Followers P
+  const followersP=document.createElement("p");
+  followersP.textContent="Followers: "+ data.followers;
+  cardInfoDiv.append(followersP);
+
+   //Following P
+   const followingP=document.createElement("p");
+   followingP.textContent="Following: "+ data.following;
+   cardInfoDiv.append(followingP);
+
+   //Bio P
+   const bioP=document.createElement("p");
+   bioP.textContent=data.bio;
+   cardInfoDiv.append(bioP);
 
 }
 
